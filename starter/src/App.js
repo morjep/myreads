@@ -1,6 +1,6 @@
 import "./App.css";
 import { useState, useEffect } from "react";
-import { Route, Routes, useNavigate, Link } from "react-router-dom";
+import { Route, Routes, Link } from "react-router-dom";
 import Search from "./Search";
 import Shelf from "./Shelf";
 
@@ -10,6 +10,23 @@ function App() {
   /* Use the useState hook to create a state variable called
   books and a function called setBooks. */
   const [books, setBooks] = useState([]);
+
+  const shelves = [
+    { id: "currentlyReading", name: "Currently Reading" },
+    { id: "wantToRead", name: "Want To Read" },
+    { id: "read", name: "Read" },
+  ];
+
+  const changeShelf = (book, shelf) => {
+    let tmpBook = books.filter((b) => b.id === book.id);
+    tmpBook[0].shelf = shelf;
+    setBooks(
+      [].concat(
+        books.filter((b) => b.id !== book.id),
+        tmpBook
+      )
+    );
+  };
 
   /* Use the useEffect hook to fetch the books from the booksAPI. */
   useEffect(() => {
@@ -21,7 +38,7 @@ function App() {
     getBooks();
   }, []);
 
-  console.log(books);
+  // console.log(books);
 
   return (
     <Routes>
@@ -37,15 +54,15 @@ function App() {
               </div>
               <div className="list-books-content">
                 <div>
-                  <Shelf
-                    shelfTitle={"Currently Reading"}
-                    books={books.filter((b) => b.shelf === "currentlyReading")}
-                  />
-                  <Shelf
-                    shelfTitle={"Want To Read"}
-                    books={books.filter((b) => b.shelf === "wantToRead")}
-                  />
-                  <Shelf shelfTitle={"Read"} books={books.filter((b) => b.shelf === "read")} />
+                  {shelves.map((s) => (
+                    <Shelf
+                      shelfId={s.id}
+                      shelfTitle={s.name}
+                      changeShelf={(book, shelf) => changeShelf(book, shelf)}
+                      books={books.filter((b) => b.shelf === s.id)}
+                      shelves={shelves}
+                    />
+                  ))}
                 </div>
               </div>
               <Link to="/search" className="open-search">

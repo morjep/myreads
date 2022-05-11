@@ -1,7 +1,13 @@
 import "./App.css";
 
-const Shelf = ({ shelfTitle, books }) => {
-  console.log(books);
+const Shelf = ({ shelfId, shelfTitle, changeShelf, books, shelves }) => {
+  // console.log(books);
+
+  const handleChange = (book, e) => {
+    const shelf = e.target.value;
+    changeShelf(book, shelf);
+  };
+
   return (
     <div className="bookshelf">
       <h2 className="bookshelf-title">{shelfTitle} </h2>
@@ -20,14 +26,15 @@ const Shelf = ({ shelfTitle, books }) => {
                     }}
                   ></div>
                   <div className="book-shelf-changer">
-                    <select>
+                    <select value={shelfId} onChange={(e) => handleChange(book, e)}>
                       <option value="none" disabled>
                         Move to...
                       </option>
-                      <option value="currentlyReading">Currently Reading</option>
-                      <option value="wantToRead">Want to Read</option>
-                      <option value="read">Read</option>
-                      <option value="none">None</option>
+                      {shelves.map((s) => (
+                        <option value={s.id}>{s.name}</option>
+                      ))}
+
+                      <option value="Remove">Remove</option>
                     </select>
                   </div>
                 </div>
