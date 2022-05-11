@@ -56,6 +56,7 @@ function App() {
                 <div>
                   {shelves.map((s) => (
                     <Shelf
+                      key={s.id}
                       shelfId={s.id}
                       shelfTitle={s.name}
                       changeShelf={(book, shelf) => changeShelf(book, shelf)}
