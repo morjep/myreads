@@ -6,7 +6,7 @@ The app is a bookshelf where you can add books and change shelves depending on t
 
 ## To use the app
 
-To get started:
+To get started go to the myreadsApp folder and do the following steps:
 
 - install all project dependencies with `npm install`
 - start the development server with `npm start`
