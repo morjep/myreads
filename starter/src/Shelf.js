@@ -1,7 +1,7 @@
 import "./App.css";
 import Book from "./Book";
 
-const Shelf = ({ shelfId, shelfTitle, changeShelf, books, shelves }) => {
+const Shelf = ({ shelfTitle, changeShelf, books, shelves }) => {
   return (
     <div className="bookshelf">
       <h2 className="bookshelf-title">{shelfTitle} </h2>
@@ -10,7 +10,6 @@ const Shelf = ({ shelfId, shelfTitle, changeShelf, books, shelves }) => {
           {books.map((book) => (
             <li key={book.id}>
               <Book
-                shelfId={shelfId}
                 changeShelf={(book, shelf) => changeShelf(book, shelf)}
                 book={book}
                 shelves={shelves}

@@ -1,6 +1,13 @@
 import "./App.css";
 
-const Book = ({ shelfId, changeShelf, book, shelves }) => {
+const Book = ({ changeShelf, book, shelves }) => {
+  /**
+   * The handleChange function takes in a book and an event as parameters. It then
+   * sets the shelf variable to the value of the event target. It then calls the
+   * changeShelf function, passing in the book and shelf variables as parameters
+   * @param book - the book object
+   * @param e - the event object
+   */
   const handleChange = (book, e) => {
     const shelf = e.target.value;
     changeShelf(book, shelf);
@@ -18,7 +25,7 @@ const Book = ({ shelfId, changeShelf, book, shelves }) => {
           }}
         ></div>
         <div className="book-shelf-changer">
-          <select value={shelfId} onChange={(e) => handleChange(book, e)}>
+          <select value={book.shelf} onChange={(e) => handleChange(book, e)}>
             <option value="none" disabled>
               Move to...
             </option>
@@ -28,7 +35,7 @@ const Book = ({ shelfId, changeShelf, book, shelves }) => {
               </option>
             ))}
 
-            <option value="Remove">Remove</option>
+            <option value="noshelf">None</option>
           </select>
         </div>
       </div>
