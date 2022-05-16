@@ -1,6 +1,7 @@
 import "./App.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { DebounceInput } from "react-debounce-input";
 import * as booksAPI from "./BooksAPI";
 import Book from "./Book";
 
@@ -44,11 +45,8 @@ const Search = ({ changeShelf, books, shelves }) => {
    */
   const handleChange = (e) => {
     const searchTerm = e.target.value;
-
-    !searchTerm && console.log("Empty Search term");
-    !searchTerm && setSearchResult([]);
-
     searchTerm && searchBooks(searchTerm);
+    !searchTerm && setSearchResult([]);
   };
 
   return (
@@ -60,10 +58,12 @@ const Search = ({ changeShelf, books, shelves }) => {
           </Link>
 
           <div className="search-books-input-wrapper">
-            <input
+            <DebounceInput
               type="text"
               placeholder="Search by title, author, or ISBN"
-              onInput={(e) => handleChange(e)}
+              minLength={0}
+              debounceTimeout={500}
+              onChange={(e) => handleChange(e)}
             />
           </div>
         </div>
