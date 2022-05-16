@@ -14,7 +14,7 @@ const Search = ({ changeShelf, books, shelves }) => {
    * @param books - the books that are already on the shelf
    * @param b - the book that is being searched for
    */
-  const isMatchChangeShelf = (books, b) => {
+  const ifMatchChangeShelf = (books, b) => {
     books.map((book) => {
       if (book.id === b.id) {
         b.shelf = book.shelf;
@@ -31,8 +31,8 @@ const Search = ({ changeShelf, books, shelves }) => {
   const searchBooks = async (term) => {
     const res = await booksAPI.search(term);
     const extendedRes = Array.isArray(res) && res.map((b) => ({ ...b, shelf: "noshelf" }));
-    Array.isArray(res) && extendedRes.map((b) => isMatchChangeShelf(books, b));
-    Array.isArray(res) && setSearchResult(extendedRes);
+    Array.isArray(res) && extendedRes.map((b) => ifMatchChangeShelf(books, b));
+    Array.isArray(res) && setSearchResult(extendedRes.filter((b) => b.imageLinks !== undefined));
 
     !Array.isArray(res) && setSearchResult([]);
   };
